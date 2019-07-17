@@ -9,7 +9,7 @@ console.log(redSquares);
 
 // aspetto che il documento sia stato caricato interamente
 $(document).ready(function() {
-
+	// vittoria();
 	//azione al click di un quadratino
 	$('.quadratino').click(function() {
 		//ricavo posizione numerica del quadrato (1-64)
@@ -27,8 +27,12 @@ $(document).ready(function() {
 		//coloro opportunamente il quadratino
 		if (found) {
 			$(this).addClass("rosso");
-			//visualizzo il punteggio
 			redCounter++;
+			//se hai vinto sigla finale
+			if(redCounter == 15) {
+				vittoria();
+			}
+			//..altrimenti visualizza punteggio
 			$("#redScoreboard").text(redCounter);
 			found = false;
 		} else {
@@ -62,4 +66,39 @@ function squaresGenerator(howMany, maxValue) {
 	//ordino per comodità, non necessario
 	array = array.sort();
 	return array;
+}
+
+function vittoria() {
+	// posizione dei colori che formano l'immagine della vittoria
+	var giallo = [11,12,13,14,15,19,20,21,22,23,28,29,30,37,45,52,53,54];
+	var gialloScuro = [10,18,27,36,44,51];
+	var bluScuro = [49,50,55,56,57,58,59,60,61,62,63,64];
+	var bluMenoScuro = [33,34,35,38,39,40,41,42,43,46,47,48];
+	var bluMenoChiaro = [17,24,25,26,31,32];
+	var bluChiaro = [1,2,3,4,5,6,7,8,9,16];
+
+	// inietto i colori nei quadrati 
+	colora(giallo, "giallo");
+	colora(gialloScuro, "gialloScuro");
+	colora(bluScuro, "bluScuro");
+	colora(bluMenoScuro, "bluMenoScuro");
+	colora(bluMenoChiaro, "bluMenoChiaro");
+	colora(bluChiaro, "bluChiaro");
+
+	// avviso il giocatore che ha vinto
+	$("h1").text('Hai vinto!');
+	$("h3").show();
+
+	function colora (colore, coloreString) {
+		var row, remainder, position;
+		for (var i = 0; i < colore.length; i++) {
+			row = Math.floor(colore[i] / 8);
+			remainder = colore[i] % 8;
+			if(remainder==0) {
+				remainder = 8;
+				row--;
+			}
+			$(`[resto='${remainder}'][riga='${row}']`).addClass(coloreString);
+		}
+	}
 }

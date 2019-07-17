@@ -20,6 +20,12 @@
   padding-top: 20px;
 }
 
+h3 {
+  text-align: center;
+  font-size: 0.8rem;
+  display: none;
+}
+
 .quadratino {
   height: 50px;
   width: 50px;
@@ -44,3 +50,10 @@
 #greenScoreboard {
   color: green;
 }
+
+.giallo {background-color: yellow;}
+.gialloScuro {background-color: gold;}
+.bluScuro {background-color: rgb(0,0,128);}
+.bluMenoScuro {background-color: rgb(0,0,148);}
+.bluMenoChiaro {background-color: rgb(0,0,168);}
+.bluChiaro {background-color: rgb(0,0,188);}
