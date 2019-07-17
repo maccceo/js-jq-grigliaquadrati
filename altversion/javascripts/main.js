@@ -4,7 +4,7 @@
 // 2 - generazione dinamica,  random,  della griglia (anche qui potrei scomporre in 2 problemi, prima mi preoccupo di come generala da js e poi in caso, come rendere random la distribuzione dei rettangoli rossi).
 var redCounter = 0, greenCounter = 0;
 var redSquares = squaresGenerator(15, 64);
-var row, remainder, position, found = false;
+var row, remainder, position, found = false, giaInserito = [];
 console.log(redSquares);
 
 // aspetto che il documento sia stato caricato interamente
@@ -17,29 +17,36 @@ $(document).ready(function() {
 		remainder = parseInt( $(this).attr('resto') );
 		position = row * 8 + remainder;
 
-		//controllo se è un quadratino rosso
-		for (var i = 0; i < redSquares.length; i++) {
-			if (position === redSquares[i]) {
-				found = true;
-			}
-		}
+		// controllo che il quadrato non sia già stato premuto!
+		if (giaInserito.includes(position) === false) {
+			//aggiungo questo quadrato a quelli già premuti
+			giaInserito.push(position);
 
-		//coloro opportunamente il quadratino
-		if (found) {
-			$(this).addClass("rosso");
-			redCounter++;
-			//se hai vinto sigla finale
-			if(redCounter == 15) {
-				vittoria();
+			//controllo se è un quadratino rosso
+			for (var i = 0; i < redSquares.length; i++) {
+				if (position === redSquares[i]) {
+					found = true;
+				}
 			}
-			//..altrimenti visualizza punteggio
-			$("#redScoreboard").text(redCounter);
-			found = false;
-		} else {
-			$(this).addClass("verde");
-			//visualizzo il punteggio
-			greenCounter++;
-			$("#greenScoreboard").text(greenCounter);
+
+			//coloro opportunamente il quadratino
+			if (found) {
+				$(this).addClass("rosso");
+				redCounter++;
+				//(se hai vinto sigla finale)
+				if(redCounter == 15) {
+					vittoria();
+				}
+				//..altrimenti visualizza punteggio
+				$("#redScoreboard").text(redCounter);
+				found = false;
+			} else {
+				$(this).addClass("verde");
+				//visualizzo il punteggio
+				greenCounter++;
+				$("#greenScoreboard").text(greenCounter);
+			}
+
 		}
 	});
 });
