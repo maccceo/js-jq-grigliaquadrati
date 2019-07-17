@@ -1,0 +1,31 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+#sopra {
+  height: 20%;
+}
+
+#sotto {
+  height: 80%;
+  text-align: center;
+  padding-top: 20px;
+}
+
+.quadratino {
+  height: 50px;
+  width: 50px;
+  display: inline-block;
+  margin: 3px;
+  border: 3px solid #000;
+}
+
+.rosso {
+  background-color: red;
+}
+
+.verde {
+  background-color: green;
+}
