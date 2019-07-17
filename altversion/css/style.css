@@ -1,0 +1,46 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+  font-family: 'Amatic SC', cursive;
+  background: #E0E0E0;
+}
+
+#sopra {
+  height: 15vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#sotto {
+  height: 85vh;
+  text-align: center;
+  padding-top: 20px;
+}
+
+.quadratino {
+  height: 50px;
+  width: 50px;
+  display: inline-block;
+  margin: 3px;
+  border: 3px solid #000;
+  background-color: #FFF;
+}
+
+.rosso {
+  background-color: red;
+}
+
+.verde {
+  background-color: green;
+}
+
+#redScoreboard {
+  color: red;
+}
+
+#greenScoreboard {
+  color: green;
+}
