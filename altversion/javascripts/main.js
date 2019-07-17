@@ -2,27 +2,26 @@
 // 15 di questi quadratini (scelti a caso all’inizio) se cliccati diventano rossi, gli altri diventano verdi
 // 1 - Sopra alla griglia deve esserci un contatore che conta quanti rossi e quanti verdi sono stati scoperti;
 // 2 - generazione dinamica,  random,  della griglia (anche qui potrei scomporre in 2 problemi, prima mi preoccupo di come generala da js e poi in caso, come rendere random la distribuzione dei rettangoli rossi).
+
 var redCounter = 0, greenCounter = 0;
 var redSquares = squaresGenerator(15, 64);
 var row, remainder, position, found = false, giaInserito = [];
-console.log(redSquares);
 
 // aspetto che il documento sia stato caricato interamente
 $(document).ready(function() {
-	// vittoria();
+
 	//azione al click di un quadratino
 	$('.quadratino').click(function() {
-		//ricavo posizione numerica del quadrato (1-64)
+		//dalle coordinate riga/resto ricavo numero del quadrato (1-64)
 		row = parseInt( $(this).attr('riga') );
 		remainder = parseInt( $(this).attr('resto') );
 		position = row * 8 + remainder;
 
-		// controllo che il quadrato non sia già stato premuto!
+		// procedo solo se il quadrato non è già stato premuto in precedenza
 		if (giaInserito.includes(position) === false) {
-			//aggiungo questo quadrato a quelli già premuti
 			giaInserito.push(position);
 
-			//controllo se è un quadratino rosso
+			//controllo se è sulla lista dei quadrati rossi generata all'inizio
 			for (var i = 0; i < redSquares.length; i++) {
 				if (position === redSquares[i]) {
 					found = true;
@@ -37,7 +36,7 @@ $(document).ready(function() {
 				if(redCounter == 15) {
 					vittoria();
 				}
-				//..altrimenti visualizza punteggio
+				//visualizzo il punteggio
 				$("#redScoreboard").text(redCounter);
 				found = false;
 			} else {
@@ -96,15 +95,25 @@ function vittoria() {
 	$("h1").text('Hai vinto!');
 	$("h3").show();
 
+	// per evitare che il giocatore continui il gioco, dico allo script di aver selezionato già tutti i quadrati possibili
+	giaInserito.length = 0;
+	for (var i = 1; i <= 64; i++) {
+		giaInserito.push(i);
+	}
+
 	function colora (colore, coloreString) {
-		var row, remainder, position;
+		var row, remainder;
 		for (var i = 0; i < colore.length; i++) {
+			// traduco posizione numerica in "coordinate <div>""
 			row = Math.floor(colore[i] / 8);
 			remainder = colore[i] % 8;
+			//correzione necessaria perchè non esiste resto=0 nell'HTML
 			if(remainder==0) {
 				remainder = 8;
 				row--;
 			}
+
+			//coloro il quadrato del colore richiesto
 			$(`[resto='${remainder}'][riga='${row}']`).addClass(coloreString);
 		}
 	}
