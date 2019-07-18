@@ -54,19 +54,13 @@ $(document).ready(function() {
 // # # FUNZIONI # #
 function squaresGenerator(howMany, maxValue) {
 	var numGenerated, array = [];
-
-	for (var i = 1; i < howMany; i++) {
-		//genero un numero
-		numGenerated = Math.floor(Math.random() * maxValue + 1);
-		//controllo che non sia già stato generato in precedenza
-		for (var i = 0; i < array.length; i++) {
-				if (array[i] === numGenerated) {
-					numGenerated = Math.floor(Math.random() * maxValue + 1);
-					// ricontrollo da capo per evitare che il numero nuovo sia uguale a uno precedente
-					i = -1;
-				}
-			}
-		//pusho il numero generato (sicuramente non doppio) nell'array
+	
+	for (var i = 0; i < howMany; i++) {
+		//genero un numero fino a quando non ne esce uno nuovo
+		do {
+			numGenerated = Math.floor(Math.random() * maxValue + 1);
+		} while (array.includes(numGenerated) == true)
+		//pusho il numero generato sicuramente non doppio nell'array
 		array.push(numGenerated)
 	}
 	//ordino per comodità, non necessario
@@ -104,7 +98,7 @@ function vittoria() {
 	function colora (colore, coloreString) {
 		var row, remainder;
 		for (var i = 0; i < colore.length; i++) {
-			// traduco posizione numerica in "coordinate <div>""
+			// traduco posizione numerica in "coordinate <div>"
 			row = Math.floor(colore[i] / 8);
 			remainder = colore[i] % 8;
 			//correzione necessaria perchè non esiste resto=0 nell'HTML
@@ -112,7 +106,7 @@ function vittoria() {
 				remainder = 8;
 				row--;
 			}
-
+			
 			//coloro il quadrato del colore richiesto
 			$(`[resto='${remainder}'][riga='${row}']`).addClass(coloreString);
 		}
